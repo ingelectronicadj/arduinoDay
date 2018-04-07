@@ -20,9 +20,13 @@ BufferedWriter writer;
 //Mod 1
 int unPWMfacil = 27; //--gpio 4,17,18,27,21,22,23,24,25...
 
+/* Tipo de datos para almacenar imágenes .gif, .jpg, .tga, .png */
+PImage img;
+
 void setup() {
   size(600,400);
   noStroke();
+  img = loadImage("../arduinoDay.png");
   JAM = new ControlP5(this);
   
   JAM.addSlider("sHorizontal")
@@ -68,7 +72,8 @@ void setPWM(int pin, float duty) {
 
 void draw() {
   background(sVertical);
-
+  image(img, 160, 100);// img ,posicion x, posicion y
+    
   fill(sHorizontal);
   rect(0,0,width,100);
   
