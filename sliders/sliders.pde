@@ -4,6 +4,9 @@
 */
 
 import controlP5.*;
+//import java.io.FileWriter;
+import java.io.BufferedWriter;
+//import java.util.*;
 
 ControlP5 JAM;
 int miColor = color(0,0,0);
@@ -11,6 +14,11 @@ int miColor = color(0,0,0);
 int sHorizontal = 120;
 int sVertical = 80;
 int mHorizontal = 30;
+
+PrintWriter output;
+BufferedWriter writer;
+//Mod 1
+int unPWMfacil = 27; //--gpio 4,17,18,27,21,22,23,24,25...
 
 void setup() {
   size(600,400);
@@ -51,6 +59,13 @@ void setup() {
      ;
 }
 
+void setPWM(int pin, float duty) {
+  output = createWriter("/dev/pi-blaster");
+  output.println(pin+"="+duty);
+  output.flush();
+  output.close();
+}
+
 void draw() {
   background(sVertical);
 
@@ -67,4 +82,7 @@ void draw() {
 void sliderJAM(int valor) {
   miColor = color(valor);
   println("Evento del slider --> PWM = "+ valor);
+  float duty = valor/255.0;
+  println("Ciclo util de la senal= " + duty);
+  setPWM(unPWMfacil,duty);
 }
